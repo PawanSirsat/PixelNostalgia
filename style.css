@@ -1,0 +1,71 @@
+body {
+ font-family: "ＭＳ Ｐゴシック";
+ background-color: #000;
+ color: #fff;
+ margin: 0;
+ padding: 0;
+}
+
+header {
+ background-color: #333;
+ padding: 20px;
+}
+
+header h1 {
+ margin: 0;
+ font-size: 36px;
+ text-align: center;
+}
+
+main {
+ padding: 20px;
+}
+
+#collection {
+ margin-top: 20px;
+}
+
+#collection h2 {
+ font-size: 24px;
+ text-align: center;
+}
+
+/* Update the game tile styles */
+#collection ul {
+ margin: 0;
+ padding: 0;
+ list-style-type: none;
+ /* Remove the list item decoration */
+}
+
+#collection li {
+ margin-bottom: 20px;
+}
+
+#collection li a {
+ display: block;
+ padding: 10px;
+ /* Old-style green color */
+ color: #009900;
+ /* Darker green on hover */
+ text-decoration: none;
+ font-size: 24px;
+ /* Make the title bigger */
+ font-family: 'Arial', sans-serif;
+ /* Use a vintage font style */
+ border-radius: 5px;
+ text-align: center;
+ transition: background-color 0.3s, transform 0.3s;
+}
+
+#collection li a:hover {
+ text-decoration: none;
+ transform: scale(1.05);
+ /* Scale up slightly on hover for an old-school effect */
+}
+
+footer {
+ background-color: #333;
+ padding: 10px;
+ text-align: center;
+}
