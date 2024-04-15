@@ -6,27 +6,79 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>2000s Gaming Collection</title>
  <link rel="stylesheet" href="style.css">
+ <style>
+  .game-item {
+   display: flex;
+   align-items: center;
+  }
+
+  .game-arrow {
+   cursor: pointer;
+   width: 20px;
+   /* Adjust size as needed */
+   height: auto;
+   margin-right: 10px;
+   /* Adjust spacing between image and text */
+  }
+
+  .selected .game-arrow {
+   display: inline;
+   /* Show arrow image for selected game */
+  }
+ </style>
 </head>
 
 <body>
+
  <main>
   <section id="collection">
    <h2>Video Game Collection</h2>
    <ul id="gameList">
-    <li id="game1" class="selected"><span>&rarr;</span><a href="game1.html">Game Title 1</a></li>
-    <li id="game2"><a href="game2.html">Game Title 2</a></li>
-    <li id="game3"><a href="game1.html">Game Title 1</a></li>
-    <li id="game4"><a href="game2.html">Game Title 2</a></li>
-    <li id="game5"><a href="game1.html">Game Title 1</a></li>
-    <li id="game6"><a href="game2.html">Game Title 2</a></li>
-    <li id="game7"><a href="game1.html">Game Title 1</a></li>
-    <li id="game8"><a href="game2.html">Game Title 2</a></li>
+    <li class="game-item selected" onclick="toggleSelection(this)">
+     <img src="arrow.png" alt="Down" class="game-arrow">
+     <a href="game1.html">Game Title 1</a>
+    </li>
+    <li class="game-item" onclick="toggleSelection(this)">
+     <img src="arrow.png" alt="Down" class="game-arrow">
+     <a href="game2.html">Game Title 2</a>
+    </li>
     <!-- Add more game links as needed -->
    </ul>
   </section>
  </main>
 
- <script src="script.js"></script>
+ <script>
+  function toggleSelection(item) {
+   const selected = document.querySelector('.selected');
+   if (selected !== item) {
+    selected.classList.remove('selected');
+    selected.querySelector('.game-arrow').style.display = 'none';
+    item.classList.add('selected');
+    item.querySelector('.game-arrow').style.display = 'inline';
+   }
+  }
+
+  document.addEventListener('keydown', function (event) {
+   const selected = document.querySelector('.selected');
+   if (event.key === 'Enter') {
+    const selectedGame = selected.querySelector('a');
+    if (selectedGame) {
+     window.location.href = selectedGame.href;
+    }
+   } else if (event.key === 'ArrowUp') {
+    const prev = selected.previousElementSibling;
+    if (prev) {
+     toggleSelection(prev);
+    }
+   } else if (event.key === 'ArrowDown') {
+    const next = selected.nextElementSibling;
+    if (next) {
+     toggleSelection(next);
+    }
+   }
+  });
+ </script>
+
 </body>
 
 </html>

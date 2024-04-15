@@ -64,18 +64,29 @@ main {
  margin-bottom: 10px;
  cursor: pointer;
  position: relative;
- /* Add position relative for arrow positioning */
 }
 
-#gameList li span {
+.arrow {
  position: absolute;
- left: -30px;
- /* Adjust the left position to place the arrow */
+ left: -40px;
+ /* Adjust the left position to position the arrow */
+ top: 50%;
+ /* Center the arrow vertically */
+ transform: translateY(-50%);
+ /* Offset the arrow vertically */
+ width: 20px;
+ /* Set the width of the arrow */
+ height: 20px;
+ /* Set the height of the arrow */
+ background-image: url('arrow.png');
+ /* Set the background image of the arrow */
+ background-size: cover;
+ /* Ensure the arrow image covers the element */
  display: none;
- /* Hide arrow by default */
+ /* Hide the arrow by default */
 }
 
-#gameList li.selected span {
+#gameList li.selected .arrow {
  display: inline-block;
- /* Show arrow for the selected game */
+ /* Show the arrow for the selected game */
 }
