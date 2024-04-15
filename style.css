@@ -4,11 +4,22 @@ body {
  color: #fff;
  margin: 0;
  padding: 0;
+ background-image: url('wal2.png');
+ /* Replace 'your-image.jpg' with the path to your image */
+ background-size: cover;
+ /* Cover the entire background */
+ background-position: center;
+ /* Center the background image */
+ background-repeat: no-repeat;
+ /* Do not repeat the background image */
+ background-attachment: fixed;
+ /* Keep the background image fixed when scrolling */
 }
 
 main {
  padding: 10px;
 }
+
 
 #collection {
  margin-top: 20px;
@@ -31,7 +42,7 @@ main {
  text-decoration: none;
  font-size: 40px;
  border-radius: 5px;
- text-align: center;
+ text-align: left;
  transition: background-color 0.3s, transform 0.3s;
  width: calc(100% - 20px);
  /* Subtract arrow width from total width */
@@ -44,7 +55,7 @@ main {
 
 .arrow {
  position: absolute;
- left: 50px;
+ left: 40px;
  top: 50%;
  transform: translateY(-50%);
  width: 10px;
@@ -72,15 +83,28 @@ main {
 
 /* CSS for the game item */
 .game-item {
- position: relative;
  display: flex;
  align-items: center;
- /* Adjust the left padding for the game name */
+ padding-left: 30%;
+}
+
+.game-image {
+ width: 50px;
+ /* Adjust size as needed */
+ height: auto;
+ /* Maintain aspect ratio */
+ margin-right: 10px;
+ /* Add spacing between image and game title */
+}
+
+.game-details {
+ display: flex;
+ align-items: center;
 }
 
 /* CSS for the arrow */
 .arrow {
- width: 10%;
+ width: 8%;
  /* Adjust the size of the arrow */
 }
 
@@ -88,7 +112,7 @@ main {
 .game-item a {
  width: 75%;
  /* Adjust the width of the game name */
- margin-left: 5px;
+
  /* Add margin to separate arrow from game name */
 }
 

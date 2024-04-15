@@ -1,6 +1,25 @@
 const games = [
-  { href: 'https://www.google.com', name: 'Game Title 1' },
-  { href: 'https://www.google.com', name: 'Game Title 2' },
+  {
+    href: 'https://www.google.com',
+    name: 'Contra',
+    image: './img/game/contra.png',
+  },
+  {
+    href: 'https://www.google.com',
+    name: 'Mario',
+    image: './img/game/mario.png',
+  },
+  {
+    href: 'https://www.google.com',
+    name: 'Duck Hunt',
+    image: './img/game/duck.png',
+  },
+  {
+    href: 'https://www.google.com',
+    name: 'Packman',
+    image: './img/game/packman.png',
+  },
+
   // Add more games as needed
 ]
 
@@ -27,13 +46,23 @@ function generateGameList() {
     arrowImg.alt = 'Down'
     arrowImg.className = 'arrow'
 
+    const gameImage = document.createElement('img')
+    gameImage.src = game.image
+    gameImage.alt = game.name
+    gameImage.classList.add('game-image')
+
+    const gameDetails = document.createElement('div') // Container div for game image and name
+    gameDetails.className = 'game-details'
+    gameDetails.appendChild(gameImage)
+
     const gameLink = document.createElement('a')
     gameLink.href = game.href
     gameLink.textContent = game.name
+    gameDetails.appendChild(gameLink)
 
-    listItem.appendChild(overlapDiv) // Append the overlap div
+    listItem.appendChild(overlapDiv)
     listItem.appendChild(arrowImg)
-    listItem.appendChild(gameLink)
+    listItem.appendChild(gameDetails) // Append container div
     gameList.appendChild(listItem)
   })
 }
