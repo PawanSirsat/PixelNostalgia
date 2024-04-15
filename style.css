@@ -1,6 +1,5 @@
 body {
  font-family: monospace;
- /* Use Arial Rounded MT Bold as the primary font */
  background-color: #000;
  color: #fff;
  margin: 0;
@@ -15,44 +14,9 @@ main {
  margin-top: 20px;
 }
 
-#collection h2 {
- font-size: 24px;
+#collection h1 {
+ font-size: 50px;
  text-align: center;
-}
-
-/* Update the game tile styles */
-#collection ul {
- margin: 0;
- padding: 0;
- list-style-type: none;
- /* Remove the list item decoration */
-}
-
-#collection li {
- margin-bottom: 10px;
-}
-
-#collection li a {
-
- display: block;
- padding: 10px;
- /* Old-style green color */
- color: #009900;
- /* Darker green on hover */
- text-decoration: none;
- font-size: 25px;
- font-weight: bold;
- /* Make the title bigger */
- /* Use a vintage font style */
- border-radius: 5px;
- text-align: center;
- transition: background-color 0.3s, transform 0.3s;
-}
-
-#collection li a:hover {
- text-decoration: none;
- transform: scale(1.01);
- /* Scale up slightly on hover for an old-school effect */
 }
 
 #gameList {
@@ -60,33 +24,80 @@ main {
  padding: 0;
 }
 
-#gameList li {
+#gameList li a {
+ display: block;
+ padding: 10px;
+ color: #009900;
+ text-decoration: none;
+ font-size: 40px;
+ border-radius: 5px;
+ text-align: center;
+ transition: background-color 0.3s, transform 0.3s;
+ width: calc(100% - 20px);
+ /* Subtract arrow width from total width */
+}
+
+#collection li {
  margin-bottom: 10px;
- cursor: pointer;
  position: relative;
 }
 
 .arrow {
  position: absolute;
- left: -40px;
- /* Adjust the left position to position the arrow */
+ left: 50px;
  top: 50%;
- /* Center the arrow vertically */
  transform: translateY(-50%);
- /* Offset the arrow vertically */
- width: 20px;
- /* Set the width of the arrow */
- height: 20px;
- /* Set the height of the arrow */
+ width: 10px;
+ /* Adjust the width of the arrow */
+ height: auto;
+ /* Automatically adjust the height */
  background-image: url('arrow.png');
- /* Set the background image of the arrow */
  background-size: cover;
- /* Ensure the arrow image covers the element */
  display: none;
- /* Hide the arrow by default */
+}
+
+#gameList li {
+ margin-bottom: 10px;
+ position: relative;
 }
 
 #gameList li.selected .arrow {
  display: inline-block;
- /* Show the arrow for the selected game */
+}
+
+/* CSS for the overlap div */
+/* CSS for the overlap div */
+/* CSS for the overlap div */
+
+
+/* CSS for the game item */
+.game-item {
+ position: relative;
+ display: flex;
+ align-items: center;
+ /* Adjust the left padding for the game name */
+}
+
+/* CSS for the arrow */
+.arrow {
+ width: 10%;
+ /* Adjust the size of the arrow */
+}
+
+/* CSS for the game link */
+.game-item a {
+ width: 75%;
+ /* Adjust the width of the game name */
+ margin-left: 5px;
+ /* Add margin to separate arrow from game name */
+}
+
+/* CSS for the game list */
+#gameList {
+ list-style-type: none;
+ padding: 0;
+ margin: 0 auto;
+ /* Center the game list horizontally */
+ max-width: 600px;
+ /* Adjust the maximum width as needed */
 }
