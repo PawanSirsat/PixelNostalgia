@@ -108,46 +108,20 @@ document.addEventListener('keydown', function (event) {
   }
 })
 
-// Initialize variables
-let lastShakeTime = 0
-let shakeThreshold = 15 // Adjust as needed
-let shakeInterval = 1000 // Adjust as needed
-
-// Function to handle device motion event
-function handleMotionEvent(event) {
-  // Get accelerometer data
-  let acceleration = event.accelerationIncludingGravity
-
-  // Calculate total acceleration
-  let totalAcceleration = Math.sqrt(
-    acceleration.x * acceleration.x +
-      acceleration.y * acceleration.y +
-      acceleration.z * acceleration.z
-  )
-
-  // Check if acceleration exceeds threshold and enough time has passed since the last shake
-  let currentTime = Date.now()
-  if (
-    totalAcceleration > shakeThreshold &&
-    currentTime - lastShakeTime > shakeInterval
-  ) {
-    // Trigger background shake animation
-    shakeBackground()
-    // Update last shake time
-    lastShakeTime = currentTime
-  }
-}
-
-// Function to simulate background shake animation
-function shakeBackground() {
-  // Apply your background shake animation logic here
-  // For example, you can add a CSS class to the body element to trigger a CSS animation
-  document.body.classList.add('shake')
-  // Remove the shake class after a delay to stop the animation
-  setTimeout(() => {
-    document.body.classList.remove('shake')
-  }, 1000) // Adjust the duration of the shake animation
-}
-
-// Add event listener for device motion
 window.addEventListener('devicemotion', handleMotionEvent)
+
+function handleMotionEvent(event) {
+  const acceleration = event.accelerationIncludingGravity
+  const x = acceleration.x
+  const y = acceleration.y
+
+  const maxX = 10 // Maximum allowable movement in X direction
+  const maxY = 10 // Maximum allowable movement in Y direction
+
+  // Calculate background position based on device motion
+  const offsetX = (x / maxX) * 100 // Convert X-axis acceleration to percentage
+  const offsetY = (y / maxY) * 100 // Convert Y-axis acceleration to percentage
+
+  // Update background position
+  document.body.style.backgroundPosition = `${offsetX}% ${offsetY}%`
+}
