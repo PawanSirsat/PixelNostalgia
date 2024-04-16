@@ -19,6 +19,11 @@ const games = [
     name: 'Packman',
     image: './img/game/packman.png',
   },
+  {
+    href: 'https://www.google.com',
+    name: 'Invader',
+    image: './img/game/invader.png',
+  },
 
   // Add more games as needed
 ]
