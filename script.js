@@ -119,8 +119,8 @@ function handleMotionEvent(event) {
   const maxY = 10 // Maximum allowable movement in Y direction
 
   // Calculate background position based on device motion
-  const offsetX = (x / maxX) * 100 // Convert X-axis acceleration to percentage
-  const offsetY = (y / maxY) * 100 // Convert Y-axis acceleration to percentage
+  const offsetX = (x / maxX) * 10 // Convert X-axis acceleration to percentage
+  const offsetY = (y / maxY) * 10 // Convert Y-axis acceleration to percentage
 
   // Update background position
   document.body.style.backgroundPosition = `${offsetX}% ${offsetY}%`
