@@ -111,40 +111,37 @@ document.addEventListener('keydown', function (event) {
 // Add event listener to detect device motion
 window.addEventListener('devicemotion', handleMotionEvent)
 
-// Function to handle device motion event
 function handleMotionEvent(event) {
-  // Access acceleration data
   const acceleration = event.acceleration
 
-  // Check if acceleration exceeds threshold for shake gesture
-  if (isShake(acceleration)) {
-    // Trigger background shake animation
-    shakeBackground()
-  }
+  // Adjust background position based on device orientation
+  adjustBackgroundPosition(acceleration)
   displayAccelerationData(acceleration)
 }
 
-// Function to check if acceleration indicates a shake gesture
-function isShake(acceleration) {
-  // Define threshold values for acceleration changes
-  const threshold = 15 // Adjust as needed
+function adjustBackgroundPosition(acceleration) {
+  // Get current orientation angle
+  const orientationAngle = window.orientation
 
-  // Calculate total acceleration magnitude
-  const totalAcceleration = Math.sqrt(
-    acceleration.x ** 2 + acceleration.y ** 2 + acceleration.z ** 2
-  )
+  // Adjust background position based on orientation angle and acceleration
+  let backgroundX = 50 // Default position
+  let backgroundY = 50 // Default position
 
-  // Check if total acceleration exceeds threshold
-  return totalAcceleration > threshold
+  // Adjust background X position based on tilt left/right
+  if (orientationAngle === 0) {
+    // Portrait orientation
+    backgroundX -= acceleration.y
+  } else if (orientationAngle === 90 || orientationAngle === -90) {
+    // Landscape orientation
+    backgroundX -= acceleration.x
+  }
+
+  // Adjust background Y position based on tilt up/down
+  backgroundY += acceleration.z
+
+  // Set background position
+  document.body.style.backgroundPosition = `${backgroundX}% ${backgroundY}%`
 }
-
-// Function to shake the background image
-function shakeBackground() {
-  // Add CSS class or trigger JavaScript animation to shake background image
-  // Example:
-  document.body.classList.add('shake-animation')
-}
-
 function displayAccelerationData(acceleration) {
   const accelerationDataElement = document.getElementById('accelerationData')
   accelerationDataElement.textContent = `Acceleration X: ${acceleration.x}, Y: ${acceleration.y}, Z: ${acceleration.z}`
