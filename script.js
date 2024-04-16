@@ -107,6 +107,9 @@ document.addEventListener('keydown', function (event) {
     }
   }
 })
+let previousOffsetX = 50 // Default offset
+let previousOffsetY = 50 // Default offset
+const threshold = 1 // Threshold for significant change
 
 window.addEventListener('devicemotion', handleMotionEvent)
 
@@ -122,6 +125,16 @@ function handleMotionEvent(event) {
   const offsetX = (x / maxX) * 10 // Convert X-axis acceleration to percentage
   const offsetY = (y / maxY) * 10 // Convert Y-axis acceleration to percentage
 
-  // Update background position
-  document.body.style.backgroundPosition = `${offsetX}% ${offsetY}%`
+  // Check if the change in offset exceeds the threshold
+  if (
+    Math.abs(offsetX - previousOffsetX) > threshold ||
+    Math.abs(offsetY - previousOffsetY) > threshold
+  ) {
+    // Update background position only if there's a significant change
+    document.body.style.backgroundPosition = `${offsetX}% ${offsetY}%`
+
+    // Update previous offsets
+    previousOffsetX = offsetX
+    previousOffsetY = offsetY
+  }
 }
