@@ -107,3 +107,39 @@ document.addEventListener('keydown', function (event) {
     }
   }
 })
+
+// Add event listener to detect device motion
+window.addEventListener('devicemotion', handleMotionEvent)
+
+// Function to handle device motion event
+function handleMotionEvent(event) {
+  // Access acceleration data
+  const acceleration = event.acceleration
+
+  // Check if acceleration exceeds threshold for shake gesture
+  if (isShake(acceleration)) {
+    // Trigger background shake animation
+    shakeBackground()
+  }
+}
+
+// Function to check if acceleration indicates a shake gesture
+function isShake(acceleration) {
+  // Define threshold values for acceleration changes
+  const threshold = 15 // Adjust as needed
+
+  // Calculate total acceleration magnitude
+  const totalAcceleration = Math.sqrt(
+    acceleration.x ** 2 + acceleration.y ** 2 + acceleration.z ** 2
+  )
+
+  // Check if total acceleration exceeds threshold
+  return totalAcceleration > threshold
+}
+
+// Function to shake the background image
+function shakeBackground() {
+  // Add CSS class or trigger JavaScript animation to shake background image
+  // Example:
+  document.body.classList.add('shake-animation')
+}
