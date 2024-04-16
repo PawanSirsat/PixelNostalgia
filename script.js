@@ -109,80 +109,45 @@ document.addEventListener('keydown', function (event) {
 })
 
 // Initialize variables
-let previousBackgroundX = 50 // Default position
-let previousBackgroundY = 50 // Default position
-
-// Constants for filtering and threshold
-const alpha = 0.8 // Smoothing factor for low-pass filter
-const threshold = 1.5 // Threshold for significant movement
+let lastShakeTime = 0
+let shakeThreshold = 15 // Adjust as needed
+let shakeInterval = 1000 // Adjust as needed
 
 // Function to handle device motion event
 function handleMotionEvent(event) {
-  const acceleration = event.acceleration
+  // Get accelerometer data
+  let acceleration = event.accelerationIncludingGravity
 
-  displayAccelerationData(acceleration)
-  const accelerationX = event.accelerationIncludingGravity.x
-  const accelerationY = event.accelerationIncludingGravity.y
-  const accelerationZ = event.accelerationIncludingGravity.z
+  // Calculate total acceleration
+  let totalAcceleration = Math.sqrt(
+    acceleration.x * acceleration.x +
+      acceleration.y * acceleration.y +
+      acceleration.z * acceleration.z
+  )
 
-  // Apply low-pass filtering to smooth the accelerometer data
-  const filteredAccelerationX =
-    alpha * previousAccelerationX + (1 - alpha) * accelerationX
-  const filteredAccelerationY =
-    alpha * previousAccelerationY + (1 - alpha) * accelerationY
-  const filteredAccelerationZ =
-    alpha * previousAccelerationZ + (1 - alpha) * accelerationZ
-
-  // Update previous accelerometer data for the next iteration
-  previousAccelerationX = filteredAccelerationX
-  previousAccelerationY = filteredAccelerationY
-  previousAccelerationZ = filteredAccelerationZ
-
-  // Normalize and scale the filtered data to adjust sensitivity
-  const scaledAccelerationX = normalize(filteredAccelerationX)
-  const scaledAccelerationY = normalize(filteredAccelerationY)
-  const scaledAccelerationZ = normalize(filteredAccelerationZ)
-
-  // Apply threshold detection to filter out small movements
+  // Check if acceleration exceeds threshold and enough time has passed since the last shake
+  let currentTime = Date.now()
   if (
-    Math.abs(scaledAccelerationX) > threshold ||
-    Math.abs(scaledAccelerationY) > threshold
+    totalAcceleration > shakeThreshold &&
+    currentTime - lastShakeTime > shakeInterval
   ) {
-    // Determine the device orientation angle (0, 90, -90, 180 degrees)
-    const orientation = window.orientation || 0
-
-    // Adjust background position based on orientation and accelerometer data
-    let backgroundX, backgroundY
-    if (orientation === 0) {
-      // Portrait orientation
-      backgroundX = previousBackgroundX - scaledAccelerationY
-      backgroundY = previousBackgroundY + scaledAccelerationZ
-    } else {
-      // Landscape orientation (90 or -90 degrees)
-      backgroundX = previousBackgroundX - scaledAccelerationX
-      backgroundY = previousBackgroundY + scaledAccelerationZ
-    }
-
-    // Smoothly transition the background position (you can use CSS transitions or animations)
-    // For example, you can set the background position using CSS:
-    document.body.style.backgroundPosition = `${backgroundX}% ${backgroundY}%`
-
-    // Update previous background position with the new values
-    previousBackgroundX = backgroundX
-    previousBackgroundY = backgroundY
+    // Trigger background shake animation
+    shakeBackground()
+    // Update last shake time
+    lastShakeTime = currentTime
   }
 }
 
-// Function to normalize accelerometer data
-function normalize(acceleration) {
-  // Scale the acceleration to a range of -10 to 10
-  return (acceleration * 10) / 9.8
+// Function to simulate background shake animation
+function shakeBackground() {
+  // Apply your background shake animation logic here
+  // For example, you can add a CSS class to the body element to trigger a CSS animation
+  document.body.classList.add('shake')
+  // Remove the shake class after a delay to stop the animation
+  setTimeout(() => {
+    document.body.classList.remove('shake')
+  }, 1000) // Adjust the duration of the shake animation
 }
 
 // Add event listener for device motion
 window.addEventListener('devicemotion', handleMotionEvent)
-
-function displayAccelerationData(acceleration) {
-  const accelerationDataElement = document.getElementById('accelerationData')
-  accelerationDataElement.textContent = `Acceleration X: ${acceleration.x}, Y: ${acceleration.y}, Z: ${acceleration.z}`
-}
