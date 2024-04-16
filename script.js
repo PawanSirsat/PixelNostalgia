@@ -121,6 +121,7 @@ function handleMotionEvent(event) {
     // Trigger background shake animation
     shakeBackground()
   }
+  displayAccelerationData(acceleration)
 }
 
 // Function to check if acceleration indicates a shake gesture
@@ -142,4 +143,9 @@ function shakeBackground() {
   // Add CSS class or trigger JavaScript animation to shake background image
   // Example:
   document.body.classList.add('shake-animation')
+}
+
+function displayAccelerationData(acceleration) {
+  const accelerationDataElement = document.getElementById('accelerationData')
+  accelerationDataElement.textContent = `Acceleration X: ${acceleration.x}, Y: ${acceleration.y}, Z: ${acceleration.z}`
 }
