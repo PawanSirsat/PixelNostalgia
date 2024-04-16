@@ -108,40 +108,80 @@ document.addEventListener('keydown', function (event) {
   }
 })
 
-// Add event listener to detect device motion
-window.addEventListener('devicemotion', handleMotionEvent)
+// Initialize variables
+let previousBackgroundX = 50 // Default position
+let previousBackgroundY = 50 // Default position
 
+// Constants for filtering and threshold
+const alpha = 0.8 // Smoothing factor for low-pass filter
+const threshold = 1.5 // Threshold for significant movement
+
+// Function to handle device motion event
 function handleMotionEvent(event) {
   const acceleration = event.acceleration
 
-  // Adjust background position based on device orientation
-  adjustBackgroundPosition(acceleration)
   displayAccelerationData(acceleration)
-}
+  const accelerationX = event.accelerationIncludingGravity.x
+  const accelerationY = event.accelerationIncludingGravity.y
+  const accelerationZ = event.accelerationIncludingGravity.z
 
-function adjustBackgroundPosition(acceleration) {
-  // Get current orientation angle
-  const orientationAngle = window.orientation
+  // Apply low-pass filtering to smooth the accelerometer data
+  const filteredAccelerationX =
+    alpha * previousAccelerationX + (1 - alpha) * accelerationX
+  const filteredAccelerationY =
+    alpha * previousAccelerationY + (1 - alpha) * accelerationY
+  const filteredAccelerationZ =
+    alpha * previousAccelerationZ + (1 - alpha) * accelerationZ
 
-  // Adjust background position based on orientation angle and acceleration
-  let backgroundX = 50 // Default position
-  let backgroundY = 50 // Default position
+  // Update previous accelerometer data for the next iteration
+  previousAccelerationX = filteredAccelerationX
+  previousAccelerationY = filteredAccelerationY
+  previousAccelerationZ = filteredAccelerationZ
 
-  // Adjust background X position based on tilt left/right
-  if (orientationAngle === 0) {
-    // Portrait orientation
-    backgroundX -= acceleration.y
-  } else if (orientationAngle === 90 || orientationAngle === -90) {
-    // Landscape orientation
-    backgroundX -= acceleration.x
+  // Normalize and scale the filtered data to adjust sensitivity
+  const scaledAccelerationX = normalize(filteredAccelerationX)
+  const scaledAccelerationY = normalize(filteredAccelerationY)
+  const scaledAccelerationZ = normalize(filteredAccelerationZ)
+
+  // Apply threshold detection to filter out small movements
+  if (
+    Math.abs(scaledAccelerationX) > threshold ||
+    Math.abs(scaledAccelerationY) > threshold
+  ) {
+    // Determine the device orientation angle (0, 90, -90, 180 degrees)
+    const orientation = window.orientation || 0
+
+    // Adjust background position based on orientation and accelerometer data
+    let backgroundX, backgroundY
+    if (orientation === 0) {
+      // Portrait orientation
+      backgroundX = previousBackgroundX - scaledAccelerationY
+      backgroundY = previousBackgroundY + scaledAccelerationZ
+    } else {
+      // Landscape orientation (90 or -90 degrees)
+      backgroundX = previousBackgroundX - scaledAccelerationX
+      backgroundY = previousBackgroundY + scaledAccelerationZ
+    }
+
+    // Smoothly transition the background position (you can use CSS transitions or animations)
+    // For example, you can set the background position using CSS:
+    document.body.style.backgroundPosition = `${backgroundX}% ${backgroundY}%`
+
+    // Update previous background position with the new values
+    previousBackgroundX = backgroundX
+    previousBackgroundY = backgroundY
   }
-
-  // Adjust background Y position based on tilt up/down
-  backgroundY += acceleration.z
-
-  // Set background position
-  document.body.style.backgroundPosition = `${backgroundX}% ${backgroundY}%`
 }
+
+// Function to normalize accelerometer data
+function normalize(acceleration) {
+  // Scale the acceleration to a range of -10 to 10
+  return (acceleration * 10) / 9.8
+}
+
+// Add event listener for device motion
+window.addEventListener('devicemotion', handleMotionEvent)
+
 function displayAccelerationData(acceleration) {
   const accelerationDataElement = document.getElementById('accelerationData')
   accelerationDataElement.textContent = `Acceleration X: ${acceleration.x}, Y: ${acceleration.y}, Z: ${acceleration.z}`
