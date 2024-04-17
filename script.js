@@ -1,3 +1,5 @@
+let up = false
+
 const games = [
   {
     href: 'https://www.working.com/',
@@ -28,12 +30,26 @@ const games = [
   // Add more games as needed
 ]
 
+// Function to show the overlay
+function showOverlay() {
+  document.getElementById('overlay').style.display = 'block'
+}
+
+// Function to hide the overlay
+function hideOverlay() {
+  document.getElementById('overlay').style.display = 'none'
+}
+
 function showPopup() {
+  showOverlay()
+
   document.getElementById('popupContainer').style.display = 'block'
 }
 
 // Function to close the popup
 function closePopup() {
+  hideOverlay()
+
   document.getElementById('popupContainer').style.display = 'none'
 }
 // Function to generate game list dynamically
@@ -97,7 +113,7 @@ function toggleSelection(item) {
     selectSound.play()
 
     const selectedGameLink = selected.querySelector('a')
-    if (selectedGameLink) {
+    if (selectedGameLink && !up) {
       const href = selectedGameLink.getAttribute('href')
       if (href === '' || href === 'https://www.working.com/') {
         showPopup()
@@ -112,6 +128,7 @@ function toggleSelection(item) {
 // Add event listener for clicks on game items
 document.querySelectorAll('.game-item').forEach((item) => {
   item.addEventListener('click', function (event) {
+    up = false
     event.preventDefault() // Prevent default behavior of anchor tag
     toggleSelection(this)
   })
@@ -137,11 +154,13 @@ document.addEventListener('keydown', function (event) {
       }
     }
   } else if (event.key === 'ArrowUp') {
+    up = true
     const prev = selected.previousElementSibling
     if (prev) {
       toggleSelection(prev)
     }
   } else if (event.key === 'ArrowDown') {
+    up = true
     const next = selected.nextElementSibling
     if (next) {
       toggleSelection(next)
