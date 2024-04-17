@@ -1,26 +1,26 @@
 const games = [
   {
-    href: 'https://www.google.com',
+    href: 'https://www.working.com/',
     name: 'Contra',
     image: './img/game/contra.png',
   },
   {
-    href: 'https://www.google.com',
+    href: 'https://www.working.com/',
     name: 'Mario',
     image: './img/game/mario.png',
   },
   {
-    href: 'https://www.google.com',
+    href: 'https://www.working.com/',
     name: 'Duck Hunt',
     image: './img/game/duck.png',
   },
   {
-    href: 'https://www.google.com',
+    href: 'https://www.working.com/',
     name: 'Packman',
     image: './img/game/packman.png',
   },
   {
-    href: 'https://www.google.com',
+    href: 'https://www.working.com/',
     name: 'Invader',
     image: './img/game/invader.png',
   },
@@ -28,6 +28,14 @@ const games = [
   // Add more games as needed
 ]
 
+function showPopup() {
+  document.getElementById('popupContainer').style.display = 'block'
+}
+
+// Function to close the popup
+function closePopup() {
+  document.getElementById('popupContainer').style.display = 'none'
+}
 // Function to generate game list dynamically
 // Function to generate game list dynamically
 function generateGameList() {
@@ -61,6 +69,8 @@ function generateGameList() {
     gameDetails.appendChild(gameImage)
 
     const gameLink = document.createElement('a')
+    console.log(game.href)
+
     gameLink.href = game.href
     gameLink.textContent = game.name
     gameDetails.appendChild(gameLink)
@@ -92,13 +102,21 @@ function toggleSelection(item) {
 // Add event listener for keyboard navigation
 document.addEventListener('keydown', function (event) {
   const selected = document.querySelector('.selected')
+  console.log(selected)
+
   if (event.key === 'Enter') {
     const selectedGame = selected.querySelector('a')
+    console.log(selected.href)
+
     if (selectedGame) {
       const startSound = document.getElementById('startSound')
       startSound.play()
-      window.location.href = selectedGame.href
-      // Play the start sound
+
+      if (String(selectedGame.href) == 'https://www.working.com/') {
+        showPopup()
+      } else {
+        window.location.href = selectedGame.href
+      }
     }
   } else if (event.key === 'ArrowUp') {
     const prev = selected.previousElementSibling
