@@ -69,8 +69,6 @@ function generateGameList() {
     gameDetails.appendChild(gameImage)
 
     const gameLink = document.createElement('a')
-    console.log(game.href)
-
     gameLink.href = game.href
     gameLink.textContent = game.name
     gameDetails.appendChild(gameLink)
@@ -86,6 +84,7 @@ function generateGameList() {
 generateGameList()
 
 // Function to toggle selection
+// Function to toggle selection
 function toggleSelection(item) {
   const selected = document.querySelector('.selected')
   if (selected !== item) {
@@ -96,8 +95,27 @@ function toggleSelection(item) {
 
     const selectSound = document.getElementById('selectSound')
     selectSound.play()
+
+    const selectedGameLink = selected.querySelector('a')
+    if (selectedGameLink) {
+      const href = selectedGameLink.getAttribute('href')
+      if (href === '' || href === 'https://www.working.com/') {
+        showPopup()
+      } else {
+        window.location.href = href
+      }
+    }
   }
 }
+
+// Add event listener for clicks on game items
+// Add event listener for clicks on game items
+document.querySelectorAll('.game-item').forEach((item) => {
+  item.addEventListener('click', function (event) {
+    event.preventDefault() // Prevent default behavior of anchor tag
+    toggleSelection(this)
+  })
+})
 
 // Add event listener for keyboard navigation
 document.addEventListener('keydown', function (event) {
