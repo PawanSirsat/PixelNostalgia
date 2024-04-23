@@ -2,6 +2,16 @@ let up = false
 
 const games = [
   {
+    href: 'https://space-invaders-lyart.vercel.app/',
+    name: 'Invader',
+    image: './img/game/invader.png',
+  },
+  {
+    href: 'https://www.working.com/',
+    name: 'Packman',
+    image: './img/game/packman.png',
+  },
+  {
     href: 'https://www.working.com/',
     name: 'Contra',
     image: './img/game/contra.png',
@@ -16,18 +26,6 @@ const games = [
     name: 'Duck Hunt',
     image: './img/game/duck.png',
   },
-  {
-    href: 'https://www.working.com/',
-    name: 'Packman',
-    image: './img/game/packman.png',
-  },
-  {
-    href: 'https://www.working.com/',
-    name: 'Invader',
-    image: './img/game/invader.png',
-  },
-
-  // Add more games as needed
 ]
 
 // Function to show the overlay
