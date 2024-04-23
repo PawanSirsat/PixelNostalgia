@@ -110,7 +110,9 @@ function toggleSelection(item) {
     const selectSound = document.getElementById('selectSound')
     selectSound.play()
 
-    const selectedGameLink = selected.querySelector('a')
+    const selectedGameLink = item.querySelector('a')
+    console.log(selectedGameLink)
+
     if (selectedGameLink && !up) {
       const href = selectedGameLink.getAttribute('href')
       if (href === '' || href === 'https://www.working.com/') {
