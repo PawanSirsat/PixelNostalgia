@@ -101,7 +101,7 @@ generateGameList()
 // Function to toggle selection
 function toggleSelection(item) {
   const selected = document.querySelector('.selected')
-  if (selected !== item) {
+  if (true) {
     selected.classList.remove('selected')
     selected.querySelector('.arrow').style.display = 'none'
     item.classList.add('selected')
@@ -111,13 +111,14 @@ function toggleSelection(item) {
     selectSound.play()
 
     const selectedGameLink = item.querySelector('a')
-    console.log(selectedGameLink)
 
     if (selectedGameLink && !up) {
       const href = selectedGameLink.getAttribute('href')
       if (href === '' || href === 'https://www.working.com/') {
         showPopup()
+        startSound.play()
       } else {
+        startSound.play()
         window.location.href = href
       }
     }
